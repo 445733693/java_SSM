@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.how2java.tmall.mapper.PropertyvalueMapper" >
+  <resultMap id="BaseResultMap" type="com.how2java.tmall.pojo.Propertyvalue" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="ptid" property="ptid" jdbcType="INTEGER" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `propertyvalue`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.how2java.tmall.pojo.Propertyvalue" useGeneratedKeys="true" keyProperty="id" >
+    insert into `propertyvalue` (pid, ptid, value
+      )
+    values (#{pid,jdbcType=INTEGER}, #{ptid,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.how2java.tmall.pojo.Propertyvalue" >
+    update `propertyvalue`
+    set
+    <if test="pid!=null">
+    pid = #{pid,jdbcType=INTEGER},
+    </if>
+    <if test="ptid!=null">
+    ptid = #{ptid,jdbcType=INTEGER},
+    </if>
+      value = #{value,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+    select id, pid, ptid, value
+    from `propertyvalue`
+    where ptid=#{ptid} and pid=#{pid}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, pid, ptid, value
+    from `propertyvalue` where pid=#{pid}
+  </select>
+</mapper>

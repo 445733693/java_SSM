@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.how2java.tmall.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.how2java.tmall.pojo.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="subTitle" property="subTitle" jdbcType="VARCHAR" />
+    <result column="originalPrice" property="originalPrice" jdbcType="REAL" />
+    <result column="promotePrice" property="promotePrice" jdbcType="REAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `product`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.how2java.tmall.pojo.Product" useGeneratedKeys="true" keyProperty="id" >
+    insert into `product` (name, subTitle, originalPrice, 
+      promotePrice, stock, cid, 
+      createDate)
+    values (#{name,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, #{originalPrice,jdbcType=REAL}, 
+      #{promotePrice,jdbcType=REAL}, #{stock,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.how2java.tmall.pojo.Product" >
+    update `product`
+    set name = #{name,jdbcType=VARCHAR},
+      subTitle = #{subTitle,jdbcType=VARCHAR},
+      originalPrice = #{originalPrice,jdbcType=REAL},
+      promotePrice = #{promotePrice,jdbcType=REAL},
+      stock = #{stock,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, name, subTitle, originalPrice, promotePrice, stock, cid, createDate
+    from `product`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="Integer">
+    select id, name, subTitle, originalPrice, promotePrice, stock, cid, createDate
+    from `product` WHERE cid=#{cid}
+  </select>
+
+  <select id="search" resultMap="BaseResultMap" parameterType="String">
+    select * from product where name like '%${keyword}%'
+  </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.how2java.tmall.mapper.ReviewMapper" >
+  <resultMap id="BaseResultMap" type="com.how2java.tmall.pojo.Review" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `review`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.how2java.tmall.pojo.Review" useGeneratedKeys="true" keyProperty="id" >
+    insert into `review` (content, uid, pid, 
+      createDate)
+    values (#{content,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.how2java.tmall.pojo.Review" >
+    update `review`
+    set content = #{content,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      createDate = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, content, uid, pid, createDate
+    from `review`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="Integer">
+    select id, content, uid, pid, createDate
+    from `review` where pid=#{pid}
+  </select>
+  <select id="getCount" resultType="Integer" parameterType="Integer">
+    select COUNT(*) from review where pid=#{pid}
+  </select>
+</mapper>

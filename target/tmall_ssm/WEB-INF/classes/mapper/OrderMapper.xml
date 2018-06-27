@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.how2java.tmall.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.how2java.tmall.pojo.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="orderCode" property="orderCode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="post" property="post" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="userMessage" property="userMessage" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="payDate" property="payDate" jdbcType="TIMESTAMP" />
+    <result column="deliveryDate" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="confirmDate" property="confirmDate" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.how2java.tmall.pojo.Order" useGeneratedKeys="true" keyProperty="id" >
+    insert into `order` (orderCode, address, post, 
+      receiver, mobile, userMessage, 
+      createDate, payDate, deliveryDate, 
+      confirmDate, uid, status
+      )
+    values (#{orderCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, 
+      #{receiver,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{userMessage,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{payDate,jdbcType=TIMESTAMP}, #{deliveryDate,jdbcType=TIMESTAMP}, 
+      #{confirmDate,jdbcType=TIMESTAMP}, #{uid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.how2java.tmall.pojo.Order" >
+    update `order`
+    set
+    <if test="orderCode!=null">orderCode = #{orderCode,jdbcType=VARCHAR},</if>
+
+    <if test="address!=null">address = #{address,jdbcType=VARCHAR},</if>
+    <if test="post!=null">post = #{post,jdbcType=VARCHAR},</if>
+    <if test="receiver!=null">      receiver = #{receiver,jdbcType=VARCHAR},</if>
+    <if test="mobile!=null">      mobile = #{mobile,jdbcType=VARCHAR},</if>
+    <if test="userMessage!=null">      userMessage = #{userMessage,jdbcType=VARCHAR},</if>
+    <if test="createDate!=null">      createDate = #{createDate,jdbcType=TIMESTAMP},</if>
+    <if test="payDate!=null">      payDate = #{payDate,jdbcType=TIMESTAMP},</if>
+    <if test="deliveryDate!=null">      deliveryDate = #{deliveryDate,jdbcType=TIMESTAMP},</if>
+    <if test="confirmDate!=null">      confirmDate = #{confirmDate,jdbcType=TIMESTAMP},</if>
+    <if test="uid!=null">      uid = #{uid,jdbcType=INTEGER},</if>
+    <if test="status!=null">      status = #{status,jdbcType=VARCHAR}</if>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, orderCode, address, post, receiver, mobile, userMessage, createDate, payDate, 
+    deliveryDate, confirmDate, uid, status
+    from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, orderCode, address, post, receiver, mobile, userMessage, createDate, payDate, 
+    deliveryDate, confirmDate, uid, status
+    from `order`
+  </select>
+
+  <select id="selectByUidAndExcludedStatus" resultMap="BaseResultMap">
+    select * from `order` where uid=#{uid} and status!=#{excludedStatus}
+  </select>
+</mapper>
